@@ -1,0 +1,8 @@
+*
+!.gitignore
+!*/
+!*.v
+!v/*.v
+!os/*.jack
+!compiler/*.c
+!compiler/Makefile

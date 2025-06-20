@@ -1,0 +1,16 @@
+/**
+ * A library of functions for controlling DE10 Lite inputs
+ * Register 16385 -> Key[1]
+ * Register 16386 -> SW
+ */
+class Input {
+
+    function boolean button() {
+        return Memory.peek(16385);
+    }
+
+    function int sw() {
+        return Memory.peek(16386);
+    }
+
+}

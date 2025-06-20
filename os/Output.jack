@@ -1,0 +1,18 @@
+/**
+ * A library of functions for controlling DE10 Lite outputs
+ * Register 16387 -> LEDR
+ * Register 16388 -> SEG7_DIG
+ */
+class Output {
+
+    function void ledr(int number) {
+        do Memory.poke(16387, number);
+        return;
+    }
+
+    function void seg(int number) {
+        do Memory.poke(16388, number);
+        return;
+    }
+
+}

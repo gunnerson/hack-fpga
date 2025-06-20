@@ -1,0 +1,49 @@
+/**
+ * A library that supports various program execution services.
+ */
+class Sys {
+
+    /** Performs all the initializations required by the OS. */
+    function void init() {
+        do Memory.init();
+        do Math.init();
+        do Output.seg(0);
+        do Main.main();
+        do Output.seg(1);
+        do Sys.halt();
+        return;
+    }
+
+    /** Halts the program execution. */
+    function void halt() {
+        while (true) {
+        }
+        return;
+    }
+
+    /** Waits approximately duration milliseconds and returns.  */
+    function void wait(int duration) {
+        var int clk;
+
+        if (duration < 0) {
+            do Sys.error(1);
+        }
+
+        while (duration > 0) {
+            let duration = duration - 1;
+            let clk = 20000;
+            while (clk > 0) {
+                let clk = clk - 1;
+            }
+        }
+        return;
+    }
+
+    /** Displays the given error code on 7-Segment display
+     *  and halts the program's execution. */
+    function void error(int errorCode) {
+        do Output.seg(errorCode);
+        do Sys.halt();
+        return;
+    }
+}

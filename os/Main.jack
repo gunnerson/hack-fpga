@@ -1,0 +1,22 @@
+class Main {
+    function void main() {
+        var int n;
+        var boolean but;
+        var int sw;
+
+        let n = 0;
+        while (true) {
+           let but = Input.button();
+           if (but = 1) {
+               let n = n + 1;
+               do Output.ledr(n);
+               do Sys.wait(1);
+           }
+
+           let sw = Input.sw();
+           do Output.seg(sw);
+        }
+
+        return;
+    }
+}
