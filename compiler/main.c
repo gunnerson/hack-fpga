@@ -91,6 +91,7 @@ int main(int argc, char *argv[]) {
       strcpy(dot, ".vm");
       FILE *ofile = fopen(path, "w");
       if (ofile) {
+        printf("[!] Compiling <%s>\n", path);
         compile(ifile, ofile);
         fclose(ofile);
         fclose(ifile);
@@ -103,6 +104,7 @@ int main(int argc, char *argv[]) {
       strcpy(dot, ".asm");
       ofile = fopen(path, "w");
       if (ofile) {
+        printf("[!] Translating <%s>\n", path);
         translate(ifile, ofile, "");
         fclose(ofile);
         fclose(ifile);
@@ -115,6 +117,7 @@ int main(int argc, char *argv[]) {
       strcpy(dot, ".hack");
       ofile = fopen(path, "w");
       if (ofile) {
+        printf("[!] Assembling...\n");
         assemble(ifile, ofile);
         fclose(ofile);
         fclose(ifile);
@@ -127,6 +130,7 @@ int main(int argc, char *argv[]) {
       strcpy(dot, ".hex");
       ofile = fopen(path, "w");
       if (ofile) {
+        printf("[!] Dumping hex...\n");
         hack2hex(ifile, ofile);
         fclose(ofile);
         fclose(ifile);
@@ -170,6 +174,7 @@ int main(int argc, char *argv[]) {
           snprintf(file_path, PATH_MAX, "%s%c%s", path, SLASH, entry->d_name);
           FILE *ofile = fopen(file_path, "w");
           if (ofile) {
+            printf("[!] Compiling <%s>\n", path);
             compile(ifile, ofile);
             fclose(ofile);
           } else
@@ -196,6 +201,7 @@ int main(int argc, char *argv[]) {
           if (ifile) {
             *dot = '\0';
             entry->d_name[MAX_SYMBOL_LENGTH - 1] = '\0';
+            printf("[!] Translating <%s>\n", path);
             translate(ifile, ofile, entry->d_name);
             fclose(ifile);
           } else
@@ -214,6 +220,7 @@ int main(int argc, char *argv[]) {
     snprintf(file_path, PATH_MAX, "%s%c%s.hack", path, SLASH, project_name);
     FILE *ofile = fopen(file_path, "w");
     if (ofile) {
+      printf("[!] Assembling...\n");
       assemble(ifile, ofile);
       fclose(ofile);
     } else
@@ -230,6 +237,7 @@ int main(int argc, char *argv[]) {
     snprintf(file_path, PATH_MAX, "%s%c%s.hex", path, SLASH, project_name);
     FILE *ofile = fopen(file_path, "w");
     if (ofile) {
+      printf("[!] Dumping hex...\n");
       hack2hex(ifile, ofile);
       fclose(ofile);
     } else

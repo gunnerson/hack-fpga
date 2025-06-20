@@ -400,7 +400,7 @@ void translate(FILE *ifile, FILE *ofile, const char *const name) {
   g_file_name = name;
   fprintf(ofile, "// %s\n", name);
   char line[MAX_LINE_LENGTH];
-  char foo_name[MAX_SYMBOL_LENGTH];
+  char foo_name[MAX_SYMBOL_LENGTH] = "foo";
   for (size_t lineNumber = 1; fgets(line, sizeof(line), ifile); lineNumber++) {
     char command[MAX_SYMBOL_LENGTH] = {0};
     char arg1[MAX_SYMBOL_LENGTH * 2] = "";
