@@ -1,7 +1,7 @@
 *
 !.gitignore
 !*/
-!*.v
+!DE10_LITE_Default.v
 !v/*.v
 !os/*.jack
 !compiler/*.c
