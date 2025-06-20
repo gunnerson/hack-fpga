@@ -1,5 +1,5 @@
 CC = clang
-CFLAGS = -Wall -g -std=c23 -O0
+CFLAGS = -Wall -std=c23 -O2
 TARGET = jackco
 SRC_FILES = $(wildcard *.c)
 OBJ_FILES = $(SRC_FILES:.c=.o)

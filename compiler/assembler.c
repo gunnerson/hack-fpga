@@ -187,10 +187,14 @@ void assemble(FILE *ifile, FILE *ofile) {
   st_set(symbols, "R13", 13);
   st_set(symbols, "R14", 14);
   st_set(symbols, "R15", 15);
-  st_set(symbols, "BUT", 16385);
-  st_set(symbols, "SW", 16386);
-  st_set(symbols, "LEDR", 16387);
-  st_set(symbols, "SEG", 16388);
+  st_set(symbols, "BUT", 16384);
+  st_set(symbols, "SW", 16385);
+  st_set(symbols, "LED", 16386);
+  st_set(symbols, "SEG", 16387);
+  st_set(symbols, "DEBUG0", 16388);
+  st_set(symbols, "DEBUG1", 16389);
+  st_set(symbols, "DEBUG2", 16390);
+  st_set(symbols, "DEBUG3", 16391);
 
   st_set(symbols, "0", 42);
   st_set(symbols, "1", 63);
@@ -331,9 +335,11 @@ void assemble(FILE *ifile, FILE *ofile) {
           if (c == '=') {
             if (!strcmp(token, "M") || !strcmp(token, "D") ||
                 !strcmp(token, "A")) {
+              // Add "@" before dest M|D|A to diff symbol from comp
               snprintf(dest, MAX_TOKEN_LENGTH, "@%s", token);
             } else
               strcpy(dest, token);
+            memset(token, 0, j);
             j = 0;
           } else if (c == ';') {
             strcpy(comp, token);

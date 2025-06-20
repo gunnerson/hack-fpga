@@ -1,7 +1,8 @@
 *
 !.gitignore
 !*/
-!*.v
+!DE10_LITE_Golden_Top.v
+!*.sdc
 !v/*.v
 !os/*.jack
 !compiler/*.c

@@ -1,7 +1,7 @@
 /**
  * This library provides two services: direct access to the computer's main
  * memory (RAM), and allocation and recycling of memory blocks. The Hack RAM
- * consists of 32,768 words, each holding a 16-bit binary number.
+ * consists of 16,384 words, each holding a 16-bit binary number.
  */ 
 class Memory {
     static Array heap, ram;

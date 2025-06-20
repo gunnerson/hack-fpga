@@ -4,7 +4,7 @@
  * else out does not change
  */
 
-module Register (
+module register (
     input clk,
     input [15:0] in,
     input load,

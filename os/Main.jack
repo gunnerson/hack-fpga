@@ -9,7 +9,7 @@ class Main {
            let but = Input.button();
            if (but = 1) {
                let n = n + 1;
-               do Output.ledr(n);
+               do Output.led(n);
                do Sys.wait(1);
            }
 
