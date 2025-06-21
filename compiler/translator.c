@@ -181,7 +181,6 @@ static int write_command(const char *const command, const char *const arg1,
   } else if (!strcmp(command, "function")) {
     strcpy(foo_name, arg1);
     fprintf(output, "(%s)\n", foo_name);
-
     for (int i = atoi(arg2); i > 0; --i) {
       g_commandNumber += 5;
       fprintf(output, "\t@SP\n\tA=M\n\tM=0\n\t@SP\n\tM=M+1\n");

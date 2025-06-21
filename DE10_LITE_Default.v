@@ -58,7 +58,7 @@ module DE10_LITE_Default (
     inout [15:0] ARDUINO_IO,
     inout        ARDUINO_RESET_N
     //////////// GPIO, GPIO connect to GPIO Default //////////
-//    inout [35:0] GPIO
+    //    inout [35:0] GPIO
 
 );
 
@@ -75,7 +75,7 @@ module DE10_LITE_Default (
   wire [19:0] mVGA_ADDR;
   wire        VGA_CLK;
 
-  reg  [31:0] Cont;
+  // reg  [31:0] Cont;
   wire [23:0] mSEG7_DIG;
   wire        spi_clk;
   wire        spi_clk_out;
@@ -103,10 +103,9 @@ module DE10_LITE_Default (
   assign VGA_CLK    = VGA_CTRL_CLK;
   assign resrt_n    = KEY[0];
 
-  always @(posedge MAX10_CLK2_50) begin
-    Cont <= Cont + 1;
-  end
-
+  // always @(posedge MAX10_CLK2_50) begin
+  //   Cont <= Cont + 1;
+  // end
   // assign LEDR = resrt_n ? (SW[0] ? led_gensor : {Cont[25:24],Cont[25:24],Cont[25:24],Cont[25:24],Cont[25:24]}) : 10'h3ff ;
   // assign mSEG7_DIG = resrt_n ? {Cont[27:24],Cont[27:24],Cont[27:24],Cont[27:24],Cont[27:24],Cont[27:24]} : {6{4'b1000}};
 
@@ -200,7 +199,7 @@ module DE10_LITE_Default (
 
   HACK u4 (
       .CLK(clk_0),
-      .RST(KEY[0]),
+      .RST(resrt_n),
       .BUT(KEY[1]),
       .SW(SW[9:0]),
       .SEG(mSEG7_DIG[15:0]),
