@@ -7,7 +7,7 @@ module hack (
 );
 
   wire        clk;
-  wire        reset;
+  wire        locked;
   wire        writeM;
   wire [15:0] instruction;
   wire [15:0] addressM;
@@ -33,12 +33,18 @@ module hack (
   wire [15:0] outIO6;
   wire [15:0] outIO7;
 
-  assign reset = ~iBUT[0];
-  assign oLED  = outIO2[9:0];
-  assign oSEG  = {8'b0, outIO3};
+  assign oLED = outIO2[9:0];
+  assign oSEG = {8'b0, outIO3};
+
+  reg [3:0] reset = 0;
+  wire rst = ~reset[3];
+  always @(negedge clk)
+    if (~iBUT[0] | ~locked) reset <= 0;
+    else if (rst) reset <= reset + 1;
 
   pll PLL (
       .inclk0(iCLK),
+      .locked(locked),
       .c0(clk)
   );
 
@@ -46,7 +52,7 @@ module hack (
       .clk(clk),
       .inM(inM),
       .instruction(instruction),
-      .reset(reset),
+      .reset(rst),
       .outM(outM),
       .writeM(writeM),
       .addressM(addressM),
