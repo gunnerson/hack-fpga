@@ -34,8 +34,8 @@ module hack (
   wire [15:0] outIO7;
 
   assign reset = ~iBUT[0];
-  assign oLED  = outIO2;
-  assign oSEG  = outIO3;
+  assign oLED  = outIO2[9:0];
+  assign oSEG  = {8'b0, outIO3};
 
   pll PLL (
       .inclk0(iCLK),
@@ -84,7 +84,7 @@ module hack (
   );
 
   ram RAM (
-      .address(addressM),
+      .address(addressM[13:0]),
       .clock(clk),
       .data(outM),
       .wren(loadRAM),
@@ -93,14 +93,14 @@ module hack (
 
   register regBUT (
       .clk (clk),
-      .in  (~iBUT[1]),
+      .in  ({15'b0, ~iBUT[1]}),
       .load(1'b1),
       .out (outIO0)
   );
 
   register regSW (
       .clk (clk),
-      .in  (iSW),
+      .in  ({6'b0, iSW}),
       .load(1'b1),
       .out (outIO1)
   );

@@ -3,6 +3,7 @@
 !*/
 !DE10_LITE_Golden_Top.v
 !*.sdc
+!*.png
 !v/*.v
 !os/*.jack
 !compiler/*.c

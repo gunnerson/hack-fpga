@@ -20,7 +20,6 @@ module cpu (
   wire        jlt = instruction[2] & ng;
   wire        jgt = instruction[0] & (~zr & ~ng);
   wire        jmp = cInstr & (jlt | jgt | jeq);
-
   wire [15:0] M = instruction[12] ? inM : A;
 
   assign writeM   = cInstr & instruction[3];

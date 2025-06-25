@@ -31,7 +31,8 @@ class Sys {
 
         while (duration > 0) {
             let duration = duration - 1;
-            let clk = 20000;
+            // let clk = 20000;
+            let clk = 1;
             while (clk > 0) {
                 let clk = clk - 1;
             }

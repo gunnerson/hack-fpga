@@ -1,10 +1,7 @@
 module SEG7_LUT (
-    oSEG,
-    iDIG
+    input      [3:0] iDIG,
+    output reg [6:0] oSEG
 );
-  input [3:0] iDIG;
-  output [6:0] oSEG;
-  reg [6:0] oSEG;
 
   always @(iDIG) begin
     case (iDIG)
@@ -24,6 +21,7 @@ module SEG7_LUT (
       4'he: oSEG = 7'b0000110;
       4'hf: oSEG = 7'b0001110;
       4'h0: oSEG = 7'b1000000;
+      default: oSEG = 7'b0000000;
     endcase
   end
 

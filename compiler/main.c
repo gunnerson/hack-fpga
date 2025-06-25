@@ -27,7 +27,6 @@
 #define DT_UNKNOWN 0
 #define MAX_NAME 64
 #define MAX_SYMBOL_LENGTH 32
-#define SLASH '/'
 
 extern char *realpath(const char *restrict path, char *restrict resolved_path);
 extern void compile(FILE *ifile, FILE *ofile);
