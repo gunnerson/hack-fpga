@@ -10,7 +10,7 @@ class Main {
            if (but = 1) {
                let n = n + 1;
                do Output.led(n);
-               do Sys.wait(1);
+               do Sys.wait(1000);
            }
 
            let sw = Input.sw();

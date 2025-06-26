@@ -7,9 +7,6 @@ module memory (
     input [15:0] inIO2,
     input [15:0] inIO3,
     input [15:0] inIO4,
-    input [15:0] inIO5,
-    input [15:0] inIO6,
-    input [15:0] inIO7,
 
     output [15:0] out,
     output        loadRAM,
@@ -17,10 +14,7 @@ module memory (
     output        loadIO1,
     output        loadIO2,
     output        loadIO3,
-    output        loadIO4,
-    output        loadIO5,
-    output        loadIO6,
-    output        loadIO7
+    output        loadIO4
 );
 
   assign out = (
@@ -29,9 +23,6 @@ module memory (
       (address == 16386) ? inIO2 :
       (address == 16387) ? inIO3 :
       (address == 16388) ? inIO4 :
-      (address == 16389) ? inIO5 :
-      (address == 16390) ? inIO6 :
-      (address == 16391) ? inIO7 :
       inRAM);
 
   assign loadRAM = (address <= 16383) ? load : 1'b0;  // RAM
@@ -39,9 +30,6 @@ module memory (
   assign loadIO1 = (address == 16385) ? load : 1'b0;  // SW
   assign loadIO2 = (address == 16386) ? load : 1'b0;  // LED
   assign loadIO3 = (address == 16387) ? load : 1'b0;  // SEG
-  assign loadIO4 = (address == 16388) ? load : 1'b0;  // DEBUG0
-  assign loadIO5 = (address == 16389) ? load : 1'b0;  // DEBUG1
-  assign loadIO6 = (address == 16390) ? load : 1'b0;  // DEBUG2
-  assign loadIO7 = (address == 16391) ? load : 1'b0;  // DEBUG3
+  assign loadIO4 = (address == 16388) ? load : 1'b0;  // STATUS
 
 endmodule

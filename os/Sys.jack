@@ -7,9 +7,9 @@ class Sys {
     function void init() {
         do Memory.init();
         do Math.init();
-        do Output.seg(0);
+        do Output.status(1);
         do Main.main();
-        do Output.seg(1);
+        do Output.status(0);
         do Sys.halt();
         return;
     }
@@ -31,8 +31,7 @@ class Sys {
 
         while (duration > 0) {
             let duration = duration - 1;
-            // let clk = 20000;
-            let clk = 1;
+            let clk = 360;  // @25MHz
             while (clk > 0) {
                 let clk = clk - 1;
             }
@@ -43,7 +42,7 @@ class Sys {
     /** Displays the given error code on 7-Segment display
      *  and halts the program's execution. */
     function void error(int errorCode) {
-        do Output.seg(errorCode);
+        do Output.status(errorCode);
         do Sys.halt();
         return;
     }

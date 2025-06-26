@@ -13,20 +13,11 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#ifdef unix
-#define SLASH '/'
-#endif
-#ifdef _WIN32
-#define SLASH '\'
-#endif
-#ifdef __APPLE__
-#define SLASH '/'
-#endif
-
 #define DT_REG 8
 #define DT_UNKNOWN 0
 #define MAX_NAME 64
 #define MAX_SYMBOL_LENGTH 32
+#define SLASH '/'
 
 extern char *realpath(const char *restrict path, char *restrict resolved_path);
 extern void compile(FILE *ifile, FILE *ofile);

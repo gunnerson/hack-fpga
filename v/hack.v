@@ -34,7 +34,8 @@ module hack (
   wire [15:0] outIO7;
 
   assign oLED = outIO2[9:0];
-  assign oSEG = {8'b0, outIO3};
+  assign oSEG[15:0] = outIO3;
+  assign oSEG[23:16] = outIO4[7:0];
 
   reg [3:0] reset = 0;
   wire rst = ~reset[3];
@@ -81,12 +82,6 @@ module hack (
       .inIO3(outIO3),
       .loadIO4(loadIO4),
       .inIO4(outIO4),
-      .loadIO5(loadIO5),
-      .inIO5(outIO5),
-      .loadIO6(loadIO6),
-      .inIO6(outIO6),
-      .loadIO7(loadIO7),
-      .inIO7(outIO7)
   );
 
   ram RAM (
@@ -99,6 +94,7 @@ module hack (
 
   register regBUT (
       .clk (clk),
+      .rst (rst),
       .in  ({15'b0, ~iBUT[1]}),
       .load(1'b1),
       .out (outIO0)
@@ -106,6 +102,7 @@ module hack (
 
   register regSW (
       .clk (clk),
+      .rst (rst),
       .in  ({6'b0, iSW}),
       .load(1'b1),
       .out (outIO1)
@@ -113,6 +110,7 @@ module hack (
 
   register regLED (
       .clk (clk),
+      .rst (rst),
       .in  (outM),
       .load(loadIO2),
       .out (outIO2)
@@ -120,37 +118,18 @@ module hack (
 
   register regSEG (
       .clk (clk),
+      .rst (rst),
       .in  (outM),
       .load(loadIO3),
       .out (outIO3)
   );
 
-  register debug0 (
+  register regSTATUS (
       .clk (clk),
+      .rst (rst),
       .in  (outM),
       .load(loadIO4),
       .out (outIO4)
-  );
-
-  register debug1 (
-      .clk (clk),
-      .in  (outM),
-      .load(loadIO5),
-      .out (outIO5)
-  );
-
-  register debug2 (
-      .clk (clk),
-      .in  (outM),
-      .load(loadIO6),
-      .out (outIO6)
-  );
-
-  register debug3 (
-      .clk (clk),
-      .in  (outM),
-      .load(loadIO7),
-      .out (outIO7)
   );
 
 endmodule

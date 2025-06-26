@@ -1,10 +1,11 @@
 module register (
     input clk,
+    input rst,
     input [15:0] in,
     input load,
     output reg [15:0] out
 );
 
-  always @(posedge clk) out <= (load ? in : out);
+  always @(posedge clk) out <= rst ? 15'b0 : load ? in : out;
 
 endmodule

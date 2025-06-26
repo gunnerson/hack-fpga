@@ -15,4 +15,8 @@ class Output {
         return;
     }
 
+    function void status(int number) {
+        do Memory.poke(16388, number);
+        return;
+    }
 }
