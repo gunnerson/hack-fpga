@@ -1,13 +1,14 @@
 module hack (
+    input         iRST,
     input         iCLK,
-    input  [ 1:0] iBUT,
+    input         iBUT_n,
     input  [ 9:0] iSW,
     output [ 9:0] oLED,
     output [23:0] oSEG
 );
 
   wire        clk;
-  wire        locked;
+  wire        rst;
   wire        writeM;
   wire [15:0] instruction;
   wire [15:0] addressM;
@@ -36,18 +37,8 @@ module hack (
   assign oLED = outIO2[9:0];
   assign oSEG[15:0] = outIO3;
   assign oSEG[23:16] = outIO4[7:0];
-
-  reg [3:0] reset = 0;
-  wire rst = ~reset[3];
-  always @(negedge clk)
-    if (~iBUT[0] | ~locked) reset <= 0;
-    else if (rst) reset <= reset + 1;
-
-  pll PLL (
-      .inclk0(iCLK),
-      .locked(locked),
-      .c0(clk)
-  );
+  assign clk = iCLK;
+  assign rst = iRST;
 
   cpu CPU (
       .clk(clk),
@@ -95,7 +86,7 @@ module hack (
   register regBUT (
       .clk (clk),
       .rst (rst),
-      .in  ({15'b0, ~iBUT[1]}),
+      .in  ({15'b0, ~iBUT_n}),
       .load(1'b1),
       .out (outIO0)
   );

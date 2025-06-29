@@ -9,10 +9,7 @@
 //=======================================================
 
 // `define ENABLE_ADC_CLOCK
-`define ENABLE_CLOCK1 
-
-
-
+`define ENABLE_CLOCK1
 // `define ENABLE_CLOCK2
 // `define ENABLE_SDRAM
 `define ENABLE_HEX0 
@@ -24,10 +21,7 @@
 `define ENABLE_KEY 
 `define ENABLE_LED 
 `define ENABLE_SW 
-`define ENABLE_VGA 
-
-
-
+`define ENABLE_VGA
 // `define ENABLE_ACCELEROMETER
 // `define ENABLE_ARDUINO
 // `define ENABLE_GPIO
@@ -127,20 +121,36 @@ module DE10_LITE_Golden_Top (
 `endif
 );
 
-
   //=======================================================
   //  REG/WIRE declarations
   //=======================================================
   //
-  wire [23:0] SEG7_DIG;
+  wire        clk_50;
+  wire [23:0] seg_dig;
   wire        VGA_CTRL_CLK;
+  wire        clk_25;
+  wire        locked;
 
   //=======================================================
   //  Structural coding
   //=======================================================
 
-  SEG7_LUT_6 u0 (
-      .iDIG (SEG7_DIG),
+  assign clk_50 = MAX10_CLK1_50;
+
+  reg  [3:0] rst_cnt = 4'h0;
+  wire       rst = ~rst_cnt[3];
+  always @(negedge clk_25)
+    if (~KEY[0] | ~locked) rst_cnt <= 4'h0;
+    else if (rst) rst_cnt <= rst_cnt + 1;
+
+  pll u0 (
+      .inclk0(clk_50),
+      .locked(locked),
+      .c0(clk_25)
+  );
+
+  seg6 u1 (
+      .iDIG (seg_dig),
       .oSEG0(HEX0),
       .oSEG1(HEX1),
       .oSEG2(HEX2),
@@ -149,16 +159,9 @@ module DE10_LITE_Golden_Top (
       .oSEG5(HEX5)
   );
 
-  vga_pll u1 (
-      .areset(),
-      .inclk0(MAX10_CLK1_50),
-      .c0(VGA_CTRL_CLK),
-      .locked()
-  );
-
-  vga_controller u2 (
-      .iRST_n(KEY[0]),
-      .iVGA_CLK(VGA_CTRL_CLK),
+  vga u2 (
+      .iRST(rst),
+      .iCLK(clk_25),
       .oHS(VGA_HS),
       .oVS(VGA_VS),
       .oVGA_B(VGA_B),
@@ -167,11 +170,12 @@ module DE10_LITE_Golden_Top (
   );
 
   hack u3 (
-      .iCLK(MAX10_CLK1_50),
-      .iBUT(KEY),
-      .iSW (SW),
+      .iRST(rst),
+      .iCLK(clk_25),
+      .iBUT_n(KEY[1]),
+      .iSW(SW),
       .oLED(LEDR),
-      .oSEG(SEG7_DIG)
+      .oSEG(seg_dig)
   );
 
 endmodule

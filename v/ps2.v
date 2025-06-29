@@ -1,7 +1,3 @@
-/**
- PS/2 Keyboard controller
- reads the keyboard and presents the last 3 received bytes.
-**/
 module ps2 (
     input         i_clk,
     input         i_rst,

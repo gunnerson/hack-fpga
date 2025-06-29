@@ -1,4 +1,4 @@
-module SEG7_LUT (
+module seg (
     input      [3:0] iDIG,
     output reg [6:0] oSEG
 );
