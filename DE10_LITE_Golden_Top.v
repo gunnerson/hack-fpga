@@ -24,10 +24,10 @@
 `define ENABLE_KEY 
 `define ENABLE_LED 
 `define ENABLE_SW 
+`define ENABLE_VGA 
 
 
 
-// `define ENABLE_VGA
 // `define ENABLE_ACCELEROMETER
 // `define ENABLE_ARDUINO
 // `define ENABLE_GPIO
@@ -49,15 +49,15 @@ module DE10_LITE_Golden_Top (
 
     //////////// SDRAM: 3.3-V LVTTL //////////
 `ifdef ENABLE_SDRAM
-    output [12:0] DRAM_ADDR,   // Row address
+    output [12:0] DRAM_ADDR,   // Address
     output [ 1:0] DRAM_BA,     // Bank select address
-    output        DRAM_CAS_N,  // Column address strobe command
+    output        DRAM_CAS_N,  // Column address strobe
     output        DRAM_CKE,    // Clock enable
     output        DRAM_CLK,    // System clock
     output        DRAM_CS_N,   // Chip select
     inout  [15:0] DRAM_DQ,     // Data I/O
     output        DRAM_LDQM,   // x16 Lower Byte, I/O Mask
-    output        DRAM_RAS_N,  // Row address strobe command
+    output        DRAM_RAS_N,  // Row address strobe
     output        DRAM_UDQM,   // x16 Upper Byte, I/O Mask
     output        DRAM_WE_N,   // Write enable
 `endif
@@ -94,7 +94,7 @@ module DE10_LITE_Golden_Top (
 
     //////////// SW: 3.3-V LVTTL //////////
 `ifdef ENABLE_SW
-    input [9:0] SW
+    input [9:0] SW,
 `endif
 
     //////////// VGA: 3.3-V LVTTL //////////
@@ -103,7 +103,7 @@ module DE10_LITE_Golden_Top (
     output [3:0] VGA_G,
     output       VGA_HS,
     output [3:0] VGA_R,
-    output       VGA_VS,
+    output       VGA_VS
 `endif
 
     //////////// Accelerometer: 3.3-V LVTTL //////////
@@ -132,14 +132,15 @@ module DE10_LITE_Golden_Top (
   //  REG/WIRE declarations
   //=======================================================
   //
-  wire [23:0] seg_dig;
+  wire [23:0] SEG7_DIG;
+  wire        VGA_CTRL_CLK;
 
   //=======================================================
   //  Structural coding
   //=======================================================
 
   SEG7_LUT_6 u0 (
-      .iDIG (seg_dig),
+      .iDIG (SEG7_DIG),
       .oSEG0(HEX0),
       .oSEG1(HEX1),
       .oSEG2(HEX2),
@@ -148,12 +149,29 @@ module DE10_LITE_Golden_Top (
       .oSEG5(HEX5)
   );
 
-  hack u1 (
+  vga_pll u1 (
+      .areset(),
+      .inclk0(MAX10_CLK1_50),
+      .c0(VGA_CTRL_CLK),
+      .locked()
+  );
+
+  vga_controller u2 (
+      .iRST_n(KEY[0]),
+      .iVGA_CLK(VGA_CTRL_CLK),
+      .oHS(VGA_HS),
+      .oVS(VGA_VS),
+      .oVGA_B(VGA_B),
+      .oVGA_G(VGA_G),
+      .oVGA_R(VGA_R)
+  );
+
+  hack u3 (
       .iCLK(MAX10_CLK1_50),
       .iBUT(KEY),
       .iSW (SW),
       .oLED(LEDR),
-      .oSEG(seg_dig)
+      .oSEG(SEG7_DIG)
   );
 
 endmodule
