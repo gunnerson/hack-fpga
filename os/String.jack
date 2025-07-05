@@ -120,9 +120,9 @@ class String {
     method void setInt_(int val) {
         var int next;
 
-        if (len = buf) {
-            do Sys.error(19);
-        }
+        // if (len = buf) {
+        //     do Sys.error(19);
+        // }
 
         if (val < 10) {
             do appendChar(val + 48);
