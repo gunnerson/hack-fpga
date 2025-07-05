@@ -60,6 +60,6 @@ To synthesise and program our design to DE10 we will use [Quartus Prime](https:/
 5. In the `Project Navigator` select `Files` instead `Hierarcy`. Right-click on `top.v` and press `Set as Top-Level Entity`. You can delete `DE10_LITE_GOLDEN_TOP.v` from project files now.
 6. We need to add a PLL to generate 25 MHz clock. In the `IP Catalog` find `ALTPLL` and double-click it. Name it `pll`. For `inclk0` frequency set 50 Mhz. On next tab uncheck `areset`. On `Output clocks` tab for `clk c0` enter output clock frequency 25 MHz. Leave everything else default. Click `Finish` and agree to add `*.qip` file to project.
 7. Go to `Assignments -> Device -> Devive and Pin Options` and change configuration mode to `Single Uncompressed Image with Memory Initialization`.
-8. Compile Design.
-
+8. Compile Design. Make sure it completes without errors. 
+9. Open Programmer. Select `USB-Blaster` in `Hardware Setup`. Press `Start`. Wait the progress bar to reach 100%. Device is programmed. Pong should be runnnig on the screen. You can use KEY1 button to restart Hack.
 
