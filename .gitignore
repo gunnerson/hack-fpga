@@ -6,6 +6,8 @@
 !*.md
 !resources/*
 !v/*.v
-!os/*.jack
+!os/*.vm
+!os/Sys.jack
+!os/IO.jack
 !compiler/*.c
 !compiler/Makefile

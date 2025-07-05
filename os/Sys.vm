@@ -1,0 +1,68 @@
+function Sys.init 0
+	call Memory.init 0
+	pop temp 0
+	call Math.init 0
+	pop temp 0
+	call Screen.init 0
+	pop temp 0
+	call Output.init 0
+	pop temp 0
+	push constant 1
+	call IO.status 1
+	pop temp 0
+	call Main.main 0
+	pop temp 0
+	push constant 0
+	call IO.status 1
+	pop temp 0
+	call Sys.halt 0
+	pop temp 0
+	push constant 0
+	return
+function Sys.halt 0
+label Sys_0_1_0
+	push constant 1
+	neg
+	not
+	if-goto Sys_0_1_1
+	goto Sys_0_1_0
+label Sys_0_1_1
+	push constant 0
+	return
+function Sys.wait 1
+label Sys_1_1_0
+	push argument 0
+	push constant 0
+	gt
+	not
+	if-goto Sys_1_1_1
+	push constant 360
+	pop local 0
+label Sys_2_2_0
+	push local 0
+	push constant 0
+	gt
+	not
+	if-goto Sys_2_2_1
+	push local 0
+	push constant 1
+	sub
+	pop local 0
+	goto Sys_2_2_0
+label Sys_2_2_1
+	push argument 0
+	push constant 1
+	sub
+	pop argument 0
+	goto Sys_1_1_0
+label Sys_1_1_1
+	push constant 0
+	return
+function Sys.error 0
+	push argument 0
+	call IO.status 1
+	pop temp 0
+	call Sys.halt 0
+	pop temp 0
+	push constant 0
+	return

@@ -1,0 +1,29 @@
+function IO.button 0
+	push constant 24577
+	call Memory.peek 1
+	return
+function IO.sw 0
+	push constant 24578
+	call Memory.peek 1
+	return
+function IO.led 0
+	push constant 24579
+	push argument 0
+	call Memory.poke 2
+	pop temp 0
+	push constant 0
+	return
+function IO.seg 0
+	push constant 24580
+	push argument 0
+	call Memory.poke 2
+	pop temp 0
+	push constant 0
+	return
+function IO.status 0
+	push constant 24581
+	push argument 0
+	call Memory.poke 2
+	pop temp 0
+	push constant 0
+	return
