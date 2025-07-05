@@ -1,0 +1,10 @@
+*
+!.gitignore
+!*/
+!top.v
+!*.sdc
+!*.png
+!v/*.v
+!os/*.jack
+!compiler/*.c
+!compiler/Makefile

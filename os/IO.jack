@@ -1,0 +1,29 @@
+/**
+ * A library of functions for controlling DE10 Lite inputs
+ */
+class IO {
+
+    function boolean button() {
+        return Memory.peek(24577);
+    }
+
+    function int sw() {
+        return Memory.peek(24578);
+    }
+
+    function void led(int number) {
+        do Memory.poke(24579, number);
+        return;
+    }
+
+    function void seg(int number) {
+        do Memory.poke(24580, number);
+        return;
+    }
+
+    function void status(int number) {
+        do Memory.poke(24581, number);
+        return;
+    }
+
+}
