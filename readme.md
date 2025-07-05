@@ -49,5 +49,12 @@ In order to be able to run Pong, which compiles to 50,000 instructions, we need 
 
 ## Software
 
-To synthesise and program our design to DE10 we will use [Quartus Prime](https://www.intel.com/content/www/us/en/collections/products/fpga/software/downloads.html) software from Intel. It has a free Lite version which is enough for our project. It also comes with a free simulation tool ModelSim.
+To synthesise and program our design to DE10 we will use [Quartus Prime](https://www.intel.com/content/www/us/en/collections/products/fpga/software/downloads.html) software from Intel. It has a free Lite version which is enough for our project. It also comes with a free simulation tool ModelSim. Since version 21 ModelSim was replaced with its advanced version Questa, which requires a license to run (it can be acquired for free for a year). I would recommend installing version 17 Lite, since it doesn't require any licenses to run. During installation make sure to select MAX10 Device support, Programmer, USB-Blaster drivers and ModelSim Starter Edition (if you want to be able to run simulation).
+
+## Programming
+
+1. Clone the project `git clone https://github.com/gunnerson/hack-fpga.git`.
+2. Start Quartus Prime and create new project. For path specify the directory from [1]. For project name type `HACK`.
+3. For project type choose `Template`. Go to [Inter Design Store](https://www.intel.com/content/www/us/en/support/programmable/support-resources/design-examples/design-store.html). In search type `DE10 Lite MAX10` and download `Intel® MAX® 10 FPGA – Terasic DE10-Lite Board Baseline Pinout` template. Back in Quartus click `Install the design template` and add downloaded `*.par` file. This will create all the necessary pin assignments and global parameters for us in the `*.qsf` file.
+
 
