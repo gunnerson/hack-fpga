@@ -3,7 +3,8 @@
 !*/
 !top.v
 !*.sdc
-!*.png
+!*.md
+!resources/*
 !v/*.v
 !os/*.jack
 !compiler/*.c
