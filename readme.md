@@ -56,5 +56,10 @@ To synthesise and program our design to DE10 we will use [Quartus Prime](https:/
 1. Clone the project `git clone https://github.com/gunnerson/hack-fpga.git`.
 2. Start Quartus Prime and create new project. For path specify the directory from [1]. For project name type `HACK`.
 3. For project type choose `Template`. Go to [Inter Design Store](https://www.intel.com/content/www/us/en/support/programmable/support-resources/design-examples/design-store.html). In search type `DE10 Lite MAX10` and download `Intel® MAX® 10 FPGA – Terasic DE10-Lite Board Baseline Pinout` template. Back in Quartus click `Install the design template` and add downloaded `*.par` file. This will create all the necessary pin assignments and global parameters for us in the `*.qsf` file.
+4. Now we need to add our project files. Go to `Project -> Add/remove files`. Click `...` next to `File` field, select `top.v` and click `Open`. Repeat for all files in `v/` directory. Click `OK` to finish. 
+5. In the `Project Navigator` select `Files` instead `Hierarcy`. Right-click on `top.v` and press `Set as Top-Level Entity`. You can delete `DE10_LITE_GOLDEN_TOP.v` from project files now.
+6. We need to add a PLL to generate 25 MHz clock. In the `IP Catalog` find `ALTPLL` and double-click it. Name it `pll`. For `inclk0` frequency set 50 Mhz. On next tab uncheck `areset`. On `Output clocks` tab for `clk c0` enter output clock frequency 25 MHz. Leave everything else default. Click `Finish` and agree to add `*.qip` file to project.
+7. Go to `Assignments -> Device -> Devive and Pin Options` and change configuration mode to `Single Uncompressed Image with Memory Initialization`.
+8. Compile Design.
 
 
