@@ -2,7 +2,7 @@
 In this project we are going to implement the HACK computer designed in parts I and II of the [Nand2Tetris](https://www.nand2tetris.org/) course.
 
 ## Hardware
-For the HACK computer itself we will be using DE10-Lite FPGA board from Terasic. It is available for purchase from their [website](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=234&No=1021#contents) for around $80 along with many expansion interface, multimedia, video/imaging, networking, AD/DA, robotics boards. It is also freely available on ebay. The board is built around Altera MAX 10 10M50DAF484C7G chip with 50,000 logic elements, 1,638 Kb of on-chip memory, 64MB of SDRAM, 2x20 GPIO interface and a VGA interface.
+For the HACK computer itself we will be using a DE10-Lite FPGA board from Terasic. It is available for purchase from their [website](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=234&No=1021#contents) for around $80 along with many expansion interface, multimedia, video/imaging, networking, AD/DA, robotics boards. It is also freely available on ebay. The board is built around the Altera MAX 10 10M50DAF484C7G chip with 50,000 logic elements, 1,638 Kb of on-chip memory, 64MB of SDRAM, 2x20 GPIO interface and a VGA interface.
 
 ![](resources/DE10-Lite_45.jpg)
 
@@ -48,7 +48,7 @@ Here we implemented the same logic as before in only 8 lines of code. And now it
 
 ### Clocks
 
-DE10 Lite comes with a 50 MHz clock. We will need to step it down to 25 MHz for our project. In Quartus Prime we have a PLL available as a free IP blocks, which we can instantiate with the required parameters. If you plan to sim this project with ModelSim make sure to include `altera_mf_ver` library which contains PLL's source code. PLL has about 20ns lag, so we will tie our reset to its output.
+DE10 Lite comes with a 50 MHz clock. We will need to step it down to 25 MHz for our project. In Quartus Prime we have PLLs available as free IP blocks, which we can instantiate with the required parameters. If you plan to sim this project with ModelSim make sure to include `altera_mf_ver` library which contains PLL's source code. PLL has about 20 ns lag, so we will tie our reset to its output.
 
 ~~~verilog
   reg  [3:0] rst_cnt = 4'h0;
@@ -69,7 +69,7 @@ In order to be able to run Pong, which compiles to 50,000 instructions, we need 
 
 ### Memory
 
-For all our memory needs we will make 3 memory blocks and a bunch of individual registers to handle IO like swithes and LEDs. For instruction memory we will make a ROM module consisting of 57,344 16-bit registers. We will initialize it with our `os.hack` file.
+For all our memory needs we will make 3 memory blocks and a bunch of individual registers to handle IO like switches and LEDs. For instruction memory we will make a ROM module consisting of 57,344 16-bit registers. We will initialize it with our `os.hack` file.
 
 ~~~verilog
   initial $readmemb("os/os.hack", MEM);
@@ -79,14 +79,14 @@ Then we will make two separate modules for RAM and screen map. Since we have two
 
 ### Video
 
-DE10 Lite comes with a 4-bit VGA DAC and supports standard VGA resolution 640x480 at 25MHz. Since Hack OS is designed to work with 512x256 resolution we will have to add 128x224 frame to our picture.
+DE10 Lite comes with a 4-bit VGA DAC and supports standard VGA resolution 640x480 at 25MHz. Since Hack OS is designed to work with 512x256 resolution we will have to add a 128x224 frame to our picture.
 
 ### Keyboard
 
-You will need a PS/2 keyboard and a pigtail to connect it to GPIO. Connect it according to diagram below.
+You will need a PS/2 keyboard and a pigtail to connect it to GPIO. Connect it according to the diagram below.
 
 | Signal | Keyboard pin | GPIO pin |
-| ------ | ------------ | -------- |
+| :----: | :----------: | :------: |
 | Vcc | 4 | 11 |
 | GND | 3 | 12 |
 | DATA | 1 | 9 |
@@ -127,5 +127,6 @@ To synthesise and program our design to DE10 we will use [Quartus Prime](https:/
 6. We need to add a PLL to generate a 25 MHz clock. In the `IP Catalog` find `ALTPLL` and double-click it. Name it `pll`. For `inclk0` frequency set 50 Mhz. On the next tab uncheck `areset`. On the `Output clocks` tab for `clk c0` enter output clock frequency 25 MHz. Leave everything else default. Click `Finish` and agree to add `*.qip` file to project.
 7. Go to `Assignments -> Device -> Device and Pin Options` and change configuration mode to `Single Uncompressed Image with Memory Initialization`.
 8. Compile Design. Make sure it completes without errors. 
-9. Open Programmer. Select `USB-Blaster` in `Hardware Setup`. Press `Start`. Wait for the progress bar to reach 100%. Device is programmed. Pong should be running on the screen. You can use `KEY0` button to restart Hack.
+9. Open Programmer. Select `USB-Blaster` in `Hardware Setup`. Press `Start`. Wait for the progress bar to reach 100%. Device is programmed. Pong should be running on the screen. You can use the `KEY0` button to restart Hack.
 
+[![](https://img.youtube.com/vi/nuCZ6CNHbZ0/0.jpg)](https://www.youtube.com/watch?v=nuCZ6CNHbZ0)
