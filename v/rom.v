@@ -4,7 +4,7 @@ module rom (
     output reg [15:0] q
 );
 
-  reg [15:0] MEM[0:57342];
+  reg [15:0] MEM[0:57343];
   initial $readmemb("os/os.hack", MEM);
   always @(negedge clock) q <= MEM[address];
 

@@ -45,7 +45,72 @@ endmodule
 Here we implemented the same logic as before in only 8 lines of code. And now it is the synthesis tool's job to generate the most efficient hardware realisation of this function.
 
 ![](resources/alu.png)
+
+### Clocks
+
+DE10 Lite comes with a 50 MHz clock. We will need to step it down to 25 MHz for our project. In Quartus Prime we have a PLL available as a free IP blocks, which we can instantiate with the required parameters. If you plan to sim this project with ModelSim make sure to include `altera_mf_ver` library which contains PLL's source code. PLL has about 20ns lag, so we will tie our reset to its output.
+
+~~~verilog
+  reg  [3:0] rst_cnt = 4'h0;
+  wire       rst = ~rst_cnt[3];
+  always @(negedge clk_25)
+    if (~KEY[0] | ~locked) rst_cnt <= 4'h0;
+    else if (rst) rst_cnt <= rst_cnt + 1;
+~~~
+
+### CPU
+
 In order to be able to run Pong, which compiles to 50,000 instructions, we need to make one small change to our CPU design. In the original specification we distinguish A from C instruction by the first MSB only. This limits the ROM address pool to only 32,768 instructions, which isn't enough for Pong. So in our design we will make a small change. Only instructions starting with `111` are now C-instructions and everything else will be A-instructions. This way we increase the ROM address pool to 57,343 while maintaining reverse compatibility with the original design.
+
+~~~verilog
+  wire cInstr = &instruction[15:13];
+~~~
+
+
+### Memory
+
+For all our memory needs we will make 3 memory blocks and a bunch of individual registers to handle IO like swithes and LEDs. For instruction memory we will make a ROM module consisting of 57,344 16-bit registers. We will initialize it with our `os.hack` file.
+
+~~~verilog
+  initial $readmemb("os/os.hack", MEM);
+~~~
+
+Then we will make two separate modules for RAM and screen map. Since we have two separate modules, CPU and VGA controller, address screen map at the same time, we will make it dual-channel, read/write channel for CPU and read-only channel for VGA. 
+
+### Video
+
+DE10 Lite comes with a 4-bit VGA DAC and supports standard VGA resolution 640x480 at 25MHz. Since Hack OS is designed to work with 512x256 resolution we will have to add 128x224 frame to our picture.
+
+### Keyboard
+
+You will need a PS/2 keyboard and a pigtail to connect it to GPIO. Connect it according to diagram below.
+
+| Signal | Keyboard pin | GPIO pin |
+| ------ | ------------ | -------- |
+| Vcc | 4 | 11 |
+| GND | 3 | 12 |
+| DATA | 1 | 9 |
+| CLK | 5 | 10 |
+
+![](resources/kbd.png)
+
+### IO
+
+You can use five new OS functions to control button `KEY1`, 10 switches `SW0` - `SW9`, 10 LEDs `LEDR0` - `LEDR9` and 6 7-digit displays `HEX0` - `HEX5`.
+
+~~~c
+class IO {
+    function boolean button();
+    function int sw();
+    function void led(int number);
+    function void seg(int number);
+    function void status(int number);
+}
+~~~
+
+## Compiler
+
+If you want to use my compiler, simply run `make` command if you have `clang` and `make` already installed (if you want to use `gcc` instead simply replace `clang` with `gcc` inside `Makefile`). 
 
 ## Software
 
@@ -56,6 +121,7 @@ To synthesise and program our design to DE10 we will use [Quartus Prime](https:/
 1. Clone the project `git clone https://github.com/gunnerson/hack-fpga.git`.
 2. Start Quartus Prime and create a new project. For path specify the directory from [1]. For project name type `HACK`.
 3. For project type choose `Template`. Go to [Intel Design Store](https://www.intel.com/content/www/us/en/support/programmable/support-resources/design-examples/design-store.html). In search type `DE10 Lite MAX10` and download `Intel® MAX® 10 FPGA – Terasic DE10-Lite Board Baseline Pinout` template. Back in Quartus click `Install the design template` and add downloaded `*.par` file. This will create all the necessary pin assignments and global parameters for us in the `*.qsf` file.
+![](resources/pinout.png)
 4. Now we need to add our project files. Go to `Project -> Add/remove files`. Click `...` next to `File` field, select `top.v` and click `Open`. Repeat for all files in `v/` directory. Click `OK` to finish. 
 5. In the `Project Navigator` select `Files` instead `Hierarchy`. Right-click on `top.v` and press `Set as Top-Level Entity`. You can delete `DE10_LITE_GOLDEN_TOP.v` from project files now.
 6. We need to add a PLL to generate a 25 MHz clock. In the `IP Catalog` find `ALTPLL` and double-click it. Name it `pll`. For `inclk0` frequency set 50 Mhz. On the next tab uncheck `areset`. On the `Output clocks` tab for `clk c0` enter output clock frequency 25 MHz. Leave everything else default. Click `Finish` and agree to add `*.qip` file to project.
