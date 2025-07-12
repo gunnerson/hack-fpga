@@ -56,6 +56,7 @@ module vga (
   wire inside_frame = (r_v >= v_tb) && (r_v < v_bb) && (r_h >= h_lb - 1) && (r_h < h_rb - 1);
   wire [10:0] frame_row = (r_v - v_tb - 112);
   wire [10:0] frame_col = (r_h - h_lb - 64 + 3);
+  wire inside_hack_screen = (r_v >= v_tb + 111) && (r_v < v_tb + 367) && (r_h >= h_lb + 63) && (r_h < h_lb + 575);
   wire next_addr = (frame_row < 256) && (frame_col < 512) && (frame_col[3:0] == 4'h0);
 
   reg data_read;
@@ -77,7 +78,8 @@ module vga (
   reg [11:0] r_rgb;
   always @(posedge iCLK)
     if (iRST) r_rgb <= 12'h000;
-    else r_rgb <= ((~inside_frame) ? 12'h000 : ((r_data[0]) ? 12'h000 : 12'hFFF));
+    else
+      r_rgb <= ~inside_frame ? 12'h000 : ~inside_hack_screen ?  12'h888 : r_data[0] ? 12'h000 : 12'hFFF;
 
   assign oVGA_R = r_rgb[11:8];
   assign oVGA_G = r_rgb[7:4];

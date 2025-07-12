@@ -20,7 +20,7 @@
 ## PROGRAM "Quartus Prime"
 ## VERSION "Version 17.0.0 Build 595 04/25/2017 SJ Standard Edition"
 
-## DATE    "Sun Jun 29 10:29:12 2025"
+## DATE    "Sat Jul 12 15:21:06 2025"
 
 ##
 ## DEVICE  "10M50DAF484C6GES"
@@ -45,7 +45,8 @@ create_clock -name {MAX10_CLK1_50} -period 20.000 -waveform { 0.000 10.000 } [ge
 #**************************************************************
 # Create Generated Clock
 #**************************************************************
-derive_pll_clocks
+
+create_generated_clock -name {u0|altpll_component|auto_generated|pll1|clk[0]} -source [get_pins {u0|altpll_component|auto_generated|pll1|inclk[0]}] -duty_cycle 50/1 -multiply_by 1 -divide_by 2 -master_clock {MAX10_CLK1_50} [get_pins {u0|altpll_component|auto_generated|pll1|clk[0]}] 
 
 
 #**************************************************************
@@ -57,14 +58,97 @@ derive_pll_clocks
 #**************************************************************
 # Set Clock Uncertainty
 #**************************************************************
-derive_clock_uncertainty
 
+set_clock_uncertainty -rise_from [get_clocks {u0|altpll_component|auto_generated|pll1|clk[0]}] -rise_to [get_clocks {u0|altpll_component|auto_generated|pll1|clk[0]}]  0.020  
+set_clock_uncertainty -rise_from [get_clocks {u0|altpll_component|auto_generated|pll1|clk[0]}] -fall_to [get_clocks {u0|altpll_component|auto_generated|pll1|clk[0]}]  0.020  
+set_clock_uncertainty -rise_from [get_clocks {u0|altpll_component|auto_generated|pll1|clk[0]}] -rise_to [get_clocks {MAX10_CLK1_50}]  0.010  
+set_clock_uncertainty -rise_from [get_clocks {u0|altpll_component|auto_generated|pll1|clk[0]}] -fall_to [get_clocks {MAX10_CLK1_50}]  0.010  
+set_clock_uncertainty -fall_from [get_clocks {u0|altpll_component|auto_generated|pll1|clk[0]}] -rise_to [get_clocks {u0|altpll_component|auto_generated|pll1|clk[0]}]  0.020  
+set_clock_uncertainty -fall_from [get_clocks {u0|altpll_component|auto_generated|pll1|clk[0]}] -fall_to [get_clocks {u0|altpll_component|auto_generated|pll1|clk[0]}]  0.020  
+set_clock_uncertainty -fall_from [get_clocks {u0|altpll_component|auto_generated|pll1|clk[0]}] -rise_to [get_clocks {MAX10_CLK1_50}]  0.010  
+set_clock_uncertainty -fall_from [get_clocks {u0|altpll_component|auto_generated|pll1|clk[0]}] -fall_to [get_clocks {MAX10_CLK1_50}]  0.010  
+set_clock_uncertainty -rise_from [get_clocks {MAX10_CLK1_50}] -rise_to [get_clocks {u0|altpll_component|auto_generated|pll1|clk[0]}]  0.010  
+set_clock_uncertainty -rise_from [get_clocks {MAX10_CLK1_50}] -fall_to [get_clocks {u0|altpll_component|auto_generated|pll1|clk[0]}]  0.010  
+set_clock_uncertainty -fall_from [get_clocks {MAX10_CLK1_50}] -rise_to [get_clocks {u0|altpll_component|auto_generated|pll1|clk[0]}]  0.010  
+set_clock_uncertainty -fall_from [get_clocks {MAX10_CLK1_50}] -fall_to [get_clocks {u0|altpll_component|auto_generated|pll1|clk[0]}]  0.010  
 
 
 #**************************************************************
 # Set Input Delay
 #**************************************************************
 
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[0]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[0]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[1]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[1]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[2]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[2]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[3]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[3]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[4]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[4]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[5]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[5]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[6]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[6]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[7]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[7]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[8]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[8]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[9]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[9]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[10]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[10]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[11]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[11]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[12]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[12]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[13]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[13]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[14]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[14]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[15]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[15]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[16]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[16]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[17]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[17]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[18]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[18]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[19]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[19]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[20]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[20]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[21]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[21]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[22]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[22]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[23]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[23]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[24]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[24]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[25]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[25]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[26]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[26]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[27]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[27]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[28]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[28]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[29]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[29]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[30]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[30]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[31]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[31]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[32]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[32]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[33]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[33]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[34]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[34]}]
+set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {GPIO[35]}]
+set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {GPIO[35]}]
 set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {KEY[0]}]
 set_input_delay -add_delay -min -clock [get_clocks {MAX10_CLK1_50}]  2.000 [get_ports {KEY[0]}]
 set_input_delay -add_delay -max -clock [get_clocks {MAX10_CLK1_50}]  3.000 [get_ports {KEY[1]}]

@@ -63,7 +63,7 @@ module hack (
       .inRAM(outRAM),
       .loadScreen(loadScreen),
       .inScreen(outScreen),
-      .inKeyboard(outKeyboard),
+      .inKeyboard(iKBD),
       .inIO0(outIO0),
       .inIO1(outIO1),
       .loadIO2(loadIO2),
