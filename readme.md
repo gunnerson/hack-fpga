@@ -129,4 +129,4 @@ To synthesise and program our design to DE10 we will use [Quartus Prime](https:/
 8. Compile Design. Make sure it completes without errors. 
 9. Open Programmer. Select `USB-Blaster` in `Hardware Setup`. Press `Start`. Wait for the progress bar to reach 100%. Device is programmed. Pong should be running on the screen. You can use the `KEY0` button to restart Hack.
 
-[![](https://img.youtube.com/vi/nuCZ6CNHbZ0/0.jpg)](https://www.youtube.com/watch?v=nuCZ6CNHbZ0)
+[![](https://img.youtube.com/vi/kqnArCZWkf4/0.jpg)](https://www.youtube.com/watch?v=kqnArCZWkf4)
